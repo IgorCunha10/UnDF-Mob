@@ -9,8 +9,6 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.shape.RoundedCornerShape
-import androidx.compose.foundation.text.input.TextFieldLineLimits
-import androidx.compose.foundation.text.input.rememberTextFieldState
 import androidx.compose.material3.Button
 import androidx.compose.material3.ButtonDefaults
 import androidx.compose.material3.ExperimentalMaterial3Api
@@ -18,6 +16,10 @@ import androidx.compose.material3.Text
 import androidx.compose.material3.TextField
 import androidx.compose.material3.TextFieldDefaults
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
+import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
@@ -32,9 +34,14 @@ import com.example.mob.R
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun LoginScreen() {
+
+    var user by remember { mutableStateOf("") }
+    var password by remember { mutableStateOf("") }
+
     Column(modifier = Modifier.fillMaxSize().padding(15.dp),
         horizontalAlignment = Alignment.CenterHorizontally,
         ) {
+
 
             Image(
                 painter = painterResource(id = R.drawable.undflogo),
@@ -63,8 +70,8 @@ fun LoginScreen() {
         Spacer(modifier = Modifier.padding(35.dp))
 
         TextField(
-            state = rememberTextFieldState(),
-            lineLimits = TextFieldLineLimits.SingleLine,
+            value = user,
+            onValueChange = {user = it},
             label = {Text("Usuário")},
             placeholder = {Text("usuario@undf.edu.br")},
             colors = TextFieldDefaults.colors(
@@ -77,8 +84,8 @@ fun LoginScreen() {
         Spacer(modifier = Modifier.padding(10.dp))
 
         TextField(
-            state = rememberTextFieldState(),
-            lineLimits = TextFieldLineLimits.SingleLine,
+            value = password,
+            onValueChange = {password = it},
             label = {Text("Senha")},
             placeholder = {Text("Senha")},
             colors = TextFieldDefaults.colors(
