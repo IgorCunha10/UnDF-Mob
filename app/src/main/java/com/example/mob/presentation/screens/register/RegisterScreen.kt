@@ -40,8 +40,9 @@ import org.w3c.dom.Text
     fun RegisterScreen() {
 
         var user by remember { mutableStateOf("") }
-        var password by remember { mutableStateOf("") }
         var email by remember { mutableStateOf("") }
+        var password by remember { mutableStateOf("") }
+        var confirmPassword by remember { mutableStateOf("") }
 
         Column(modifier = Modifier.fillMaxSize().padding(15.dp),
             horizontalAlignment = Alignment.CenterHorizontally,
@@ -115,8 +116,8 @@ import org.w3c.dom.Text
             Spacer(modifier = Modifier.padding(10.dp))
 
             TextField(
-                value = password,
-                onValueChange = {password = it},
+                value = confirmPassword,
+                onValueChange = {confirmPassword = it},
                 label = {Text("Repetir Senha")},
                 placeholder = {Text("Repetir Senha")},
                 colors = TextFieldDefaults.colors(
