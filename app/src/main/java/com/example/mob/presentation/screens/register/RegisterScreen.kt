@@ -28,16 +28,21 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.font.FontFamily
 import androidx.compose.ui.text.font.FontStyle
+import androidx.compose.ui.text.input.PasswordVisualTransformation
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.example.mob.R
+import com.example.mob.viewmodel.AuthViewModel
 import org.w3c.dom.Text
 
 
 @OptIn(ExperimentalMaterial3Api::class)
     @Composable
-    fun RegisterScreen() {
+    fun RegisterScreen(
+        viewModel: AuthViewModel,
+        onRegisterSuccess: () -> Unit
+    ) {
 
         var user by remember { mutableStateOf("") }
         var email by remember { mutableStateOf("") }
@@ -107,6 +112,7 @@ import org.w3c.dom.Text
                 onValueChange = {password = it},
                 label = {Text("Senha")},
                 placeholder = {Text("Senha")},
+                visualTransformation = PasswordVisualTransformation(),
                 colors = TextFieldDefaults.colors(
                     focusedContainerColor = Color(0xFFE9ECEF),
                     unfocusedContainerColor = Color(0xFFE9ECEF)
@@ -120,6 +126,7 @@ import org.w3c.dom.Text
                 onValueChange = {confirmPassword = it},
                 label = {Text("Repetir Senha")},
                 placeholder = {Text("Repetir Senha")},
+                visualTransformation = PasswordVisualTransformation(),
                 colors = TextFieldDefaults.colors(
                     focusedContainerColor = Color(0xFFE9ECEF),
                     unfocusedContainerColor = Color(0xFFE9ECEF)
@@ -128,7 +135,15 @@ import org.w3c.dom.Text
 
             Spacer(modifier = Modifier.padding(10.dp))
 
-            Button(onClick = {},
+            Button(onClick = {
+                viewModel.register(
+                    name = user,
+                    email = email,
+                    password = password
+                ) {
+                    onRegisterSuccess()
+                }
+            },
                 shape = RoundedCornerShape(10.dp),
                 colors = ButtonDefaults.buttonColors(
                     containerColor = Color(0xFF0077B6)

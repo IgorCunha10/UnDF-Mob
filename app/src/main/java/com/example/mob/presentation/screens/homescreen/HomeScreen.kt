@@ -55,7 +55,7 @@ fun HomeScreen() {
 
                 Spacer(modifier = Modifier.absolutePadding(right = 10.dp))
 
-                Text(text = "Bem vindo, Usuário",
+                Text(text = "Bem vindo ao Mob",
                     fontSize = 18.sp,
                     fontWeight = FontWeight.Bold)
 
