@@ -19,6 +19,7 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.example.mob.R
+import com.example.mob.presentation.components.MidCarousel
 import com.example.mob.presentation.components.TopCarousel
 
 @Composable
@@ -34,7 +35,7 @@ fun HomeScreen() {
             Image(
                 painter = painterResource(R.drawable.profile),
                 contentDescription = "Profile Icon",
-                modifier = Modifier.size(24.dp)
+                modifier = Modifier.size(28.dp)
             )
 
             Spacer(modifier = Modifier.absolutePadding(right = 10.dp))
@@ -54,6 +55,12 @@ fun HomeScreen() {
 
         TopCarousel()
 
+        Spacer(modifier = Modifier.padding(15.dp))
+
+        Text(text = "Áreas",
+            modifier = Modifier.absolutePadding(15.dp))
+
+        MidCarousel()
     }
 
 //    Spacer(modifier = Modifier.padding(40.dp))

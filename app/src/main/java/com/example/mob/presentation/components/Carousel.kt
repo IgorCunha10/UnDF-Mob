@@ -3,6 +3,7 @@ package com.example.mob.presentation.components
 import android.R.attr.contentDescription
 import androidx.annotation.DrawableRes
 import androidx.compose.foundation.Image
+import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxWidth
@@ -17,11 +18,13 @@ import androidx.compose.material3.carousel.HorizontalMultiBrowseCarousel
 import androidx.compose.material3.carousel.rememberCarouselState
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.remember
+import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.unit.dp
 import com.example.mob.R
+import kotlin.collections.listOf
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
@@ -69,10 +72,60 @@ fun TopCarousel() {
     }
 }
 
+@OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun MidCarousel() {
 
-    val items = remember {
+    data class midCarouselItem(
+        val id: Int,
+        @DrawableRes val imageResItem: Int,
+        val contentDescription: String
+    )
+
+    val carouselItem = remember {
+        listOf(
+            midCarouselItem(0, R.drawable.tech,
+                "Tecnologia"),
+            midCarouselItem(1, R.drawable.saude,
+                "Saúde"),
+            midCarouselItem(2, R.drawable.art,
+                "Arte"),
+            midCarouselItem(3, R.drawable.linguistics,
+                "Linguagem")
+        )
+    }
+
+    HorizontalMultiBrowseCarousel(
+        state = rememberCarouselState{carouselItem.count()},
+        modifier = Modifier.fillMaxWidth()
+            .wrapContentHeight()
+            .padding(top = 10.dp, bottom = 2.dp),
+            preferredItemWidth = 150.dp,
+            itemSpacing = 12.dp,
+            contentPadding = PaddingValues(horizontal = 16.dp)
+
+    ) {
+        i ->
+        val midItem = carouselItem[i]
+
+        Column(modifier = Modifier.fillMaxWidth(),
+            horizontalAlignment = Alignment.CenterHorizontally) {
+
+            Image(modifier = Modifier
+                .height(105.dp)
+                .maskClip(MaterialTheme.shapes.medium),
+                painter = painterResource(id = midItem.imageResItem),
+                contentDescription = midItem.contentDescription,
+                contentScale = ContentScale.Crop)
+
+            Spacer(modifier = Modifier.height(8.dp))
+
+            Text(
+                text = midItem.contentDescription
+
+            )
+        }
+
 
     }
 
