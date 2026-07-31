@@ -10,6 +10,8 @@ import androidx.compose.foundation.layout.absolutePadding
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
+import androidx.compose.foundation.rememberScrollState
+import androidx.compose.foundation.verticalScroll
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
@@ -19,13 +21,18 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.example.mob.R
+import com.example.mob.data.CourseData
+import com.example.mob.presentation.components.CourseCard
 import com.example.mob.presentation.components.MidCarousel
 import com.example.mob.presentation.components.TopCarousel
 
 @Composable
 fun HomeScreen() {
 
+    val courses = CourseData.courses
+
     Column(modifier = Modifier.fillMaxWidth()
+        .verticalScroll(rememberScrollState())
         .absolutePadding(top = 40.dp, left = 25.dp, right = 20.dp)) {
 
         Row(modifier = Modifier.fillMaxWidth(),
@@ -58,9 +65,24 @@ fun HomeScreen() {
         Spacer(modifier = Modifier.padding(15.dp))
 
         Text(text = "Áreas",
+            fontWeight = FontWeight.Bold,
             modifier = Modifier.absolutePadding(15.dp))
 
         MidCarousel()
+
+        Spacer(modifier = Modifier.padding(20.dp))
+
+        Text(text = "Todos os projetos",
+            fontWeight = FontWeight.Bold)
+
+        Spacer(modifier = Modifier.padding(8.dp))
+
+
+        courses.forEach { course ->
+            CourseCard(course)
+        }
+
+
     }
 
 //    Spacer(modifier = Modifier.padding(40.dp))
