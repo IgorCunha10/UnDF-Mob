@@ -1,23 +1,102 @@
 package com.example.mob.presentation.screens.homescreen
 
-import androidx.compose.foundation.layout.Box
+import androidx.compose.foundation.Image
+import androidx.compose.foundation.layout.Arrangement
+import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.Row
+import androidx.compose.foundation.layout.Spacer
+import androidx.compose.foundation.layout.absolutePadding
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.size
+import androidx.compose.foundation.rememberScrollState
+import androidx.compose.foundation.verticalScroll
+import androidx.compose.material3.Scaffold
+import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.res.painterResource
+import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
-import com.example.mob.presentation.components.Carousel
+import androidx.compose.ui.unit.sp
+import com.example.mob.R
+import com.example.mob.data.CourseData
+import com.example.mob.presentation.components.BottomBar
+import com.example.mob.presentation.components.CourseCard
+import com.example.mob.presentation.components.MidCarousel
+import com.example.mob.presentation.components.TopCarousel
 
 @Composable
 fun HomeScreen() {
 
-    Box(modifier = Modifier.fillMaxWidth()
-        .padding(10.dp)) {
+    val courses = CourseData.courses
+
+    Scaffold(bottomBar = {
+        BottomBar()
+    }) {
+        paddingValues ->
+
+        Column(modifier = Modifier.fillMaxWidth()
+            .verticalScroll(rememberScrollState())
+            .padding(paddingValues)
+            .padding(horizontal = 16.dp,
+                vertical = 12.dp)) {
+
+            Row(modifier = Modifier.fillMaxWidth(),
+                verticalAlignment = Alignment.CenterVertically,
+                horizontalArrangement = Arrangement.Start) {
+
+                Image(
+                    painter = painterResource(R.drawable.profile),
+                    contentDescription = "Profile Icon",
+                    modifier = Modifier.size(28.dp)
+                )
+
+                Spacer(modifier = Modifier.absolutePadding(right = 10.dp))
+
+                Text(text = "Bem vindo ao Mob",
+                    fontSize = 18.sp,
+                    fontWeight = FontWeight.Bold)
+
+                Spacer(modifier = Modifier.absolutePadding(right = 140.dp))
+
+                Image(
+                    painter = painterResource(R.drawable.notification),
+                    contentDescription = "Notification Icon",
+                    modifier = Modifier.size(32.dp)
+                )
+            }
+
+            TopCarousel()
+
+            Spacer(modifier = Modifier.padding(15.dp))
+
+            Text(text = "Áreas",
+                fontWeight = FontWeight.Bold,
+                modifier = Modifier.absolutePadding(15.dp))
+
+            MidCarousel()
+
+            Spacer(modifier = Modifier.padding(20.dp))
+
+            Text(text = "Todos os projetos",
+                fontWeight = FontWeight.Bold)
+
+            Spacer(modifier = Modifier.padding(8.dp))
+
+
+            courses.forEach { course ->
+                CourseCard(course)
+            }
+
+    }
+
 
 
 
     }
 
+//    Spacer(modifier = Modifier.padding(40.dp))
 
-    Carousel()
 }

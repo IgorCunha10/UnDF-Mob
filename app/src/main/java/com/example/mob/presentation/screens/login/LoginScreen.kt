@@ -13,6 +13,7 @@ import androidx.compose.material3.Button
 import androidx.compose.material3.ButtonDefaults
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.Text
+import androidx.compose.material3.TextButton
 import androidx.compose.material3.TextField
 import androidx.compose.material3.TextFieldDefaults
 import androidx.compose.runtime.Composable
@@ -26,14 +27,21 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.font.FontFamily
 import androidx.compose.ui.text.font.FontStyle
+import androidx.compose.ui.text.input.PasswordVisualTransformation
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import androidx.lifecycle.viewmodel.compose.viewModel
 import com.example.mob.R
+import com.example.mob.viewmodel.AuthViewModel
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
-fun LoginScreen() {
+fun LoginScreen(
+    viewModel: AuthViewModel,
+    onRegisterClick: () -> Unit,
+    onLoginSuccess: () -> Unit
+) {
 
     var user by remember { mutableStateOf("") }
     var password by remember { mutableStateOf("") }
@@ -89,6 +97,8 @@ fun LoginScreen() {
             onValueChange = {password = it},
             label = {Text("Senha")},
             placeholder = {Text("Senha")},
+            visualTransformation =
+                PasswordVisualTransformation(),
             colors = TextFieldDefaults.colors(
                 focusedContainerColor = Color(0xFFE9ECEF),
                 unfocusedContainerColor = Color(0xFFE9ECEF)
@@ -101,7 +111,15 @@ fun LoginScreen() {
 
         Spacer(modifier = Modifier.padding(20.dp))
 
-        Button(onClick = {},
+        Button(onClick = {
+
+          viewModel.login(email = user,
+              password = password)
+          {
+                onLoginSuccess()
+            }
+
+        },
             shape = RoundedCornerShape(10.dp),
             colors = ButtonDefaults.buttonColors(
                 containerColor = Color(0xFF0077B6)
@@ -113,7 +131,11 @@ fun LoginScreen() {
 
         Spacer(modifier = Modifier.padding(10.dp))
 
-        Text(text = "Não tem uma conta? Registre-se")
+        TextButton(onClick = {
+            onRegisterClick()
+        }) {
+            Text(text = "Não tem uma conta? Registre-se")
+        }
 
 
     }
