@@ -9,11 +9,14 @@ import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.width
+import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.shape.RoundedCornerShape
+import androidx.compose.foundation.verticalScroll
 import androidx.compose.material3.Button
 import androidx.compose.material3.ButtonDefaults
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.Text
+import androidx.compose.material3.TextButton
 import androidx.compose.material3.TextField
 import androidx.compose.material3.TextFieldDefaults
 import androidx.compose.runtime.Composable
@@ -28,6 +31,7 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.font.FontFamily
 import androidx.compose.ui.text.font.FontStyle
+import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.input.PasswordVisualTransformation
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
@@ -49,7 +53,8 @@ import org.w3c.dom.Text
         var password by remember { mutableStateOf("") }
         var confirmPassword by remember { mutableStateOf("") }
 
-        Column(modifier = Modifier.fillMaxSize().padding(15.dp),
+        Column(modifier = Modifier.fillMaxSize().padding(15.dp)
+            .verticalScroll(rememberScrollState()),
             horizontalAlignment = Alignment.CenterHorizontally,
         ) {
 
@@ -64,6 +69,7 @@ import org.w3c.dom.Text
                 text = "Mob",
                 fontFamily = FontFamily.SansSerif,
                 fontStyle = FontStyle.Normal,
+                fontWeight = FontWeight.Black,
                 textAlign = TextAlign.Center,
                 fontSize = 32.sp
             )
@@ -82,9 +88,9 @@ import org.w3c.dom.Text
 
             TextField(
                 value = user,
-                onValueChange = {user = it},
-                label = {Text("Usuário")},
-                placeholder = {Text("Usuário")},
+                onValueChange = { user = it },
+                label = { Text("Usuário") },
+                placeholder = { Text("Usuário") },
                 colors = TextFieldDefaults.colors(
                     focusedContainerColor = Color(0xFFE9ECEF),
                     unfocusedContainerColor = Color(0xFFE9ECEF)
@@ -96,9 +102,9 @@ import org.w3c.dom.Text
 
             TextField(
                 value = email,
-                onValueChange = {email = it},
-                label = {Text("Email")},
-                placeholder = {Text("user@email.com")},
+                onValueChange = { email = it },
+                label = { Text("Email") },
+                placeholder = { Text("user@email.com") },
                 colors = TextFieldDefaults.colors(
                     focusedContainerColor = Color(0xFFE9ECEF),
                     unfocusedContainerColor = Color(0xFFE9ECEF)
@@ -109,9 +115,9 @@ import org.w3c.dom.Text
 
             TextField(
                 value = password,
-                onValueChange = {password = it},
-                label = {Text("Senha")},
-                placeholder = {Text("Senha")},
+                onValueChange = { password = it },
+                label = { Text("Senha") },
+                placeholder = { Text("Senha") },
                 visualTransformation = PasswordVisualTransformation(),
                 colors = TextFieldDefaults.colors(
                     focusedContainerColor = Color(0xFFE9ECEF),
@@ -123,9 +129,9 @@ import org.w3c.dom.Text
 
             TextField(
                 value = confirmPassword,
-                onValueChange = {confirmPassword = it},
-                label = {Text("Repetir Senha")},
-                placeholder = {Text("Repetir Senha")},
+                onValueChange = { confirmPassword = it },
+                label = { Text("Repetir Senha") },
+                placeholder = { Text("Repetir Senha") },
                 visualTransformation = PasswordVisualTransformation(),
                 colors = TextFieldDefaults.colors(
                     focusedContainerColor = Color(0xFFE9ECEF),
@@ -135,29 +141,35 @@ import org.w3c.dom.Text
 
             Spacer(modifier = Modifier.padding(10.dp))
 
-            Button(onClick = {
-                viewModel.register(
-                    name = user,
-                    email = email,
-                    password = password
-                ) {
-                    onRegisterSuccess()
-                }
-            },
+            Button(
+                onClick = {
+                    viewModel.register(
+                        name = user,
+                        email = email,
+                        password = password
+                    ) {
+                        onRegisterSuccess()
+                    }
+                },
                 shape = RoundedCornerShape(10.dp),
                 colors = ButtonDefaults.buttonColors(
                     containerColor = Color(0xFF0077B6)
                 ),
                 modifier = Modifier.width(275.dp)
-                    .height(55.dp)) {
+                    .height(55.dp)
+            ) {
                 Text(text = "Registrar")
             }
 
             Spacer(modifier = Modifier.padding(10.dp))
 
 
-            Text(text = "Já possui uma conta? Entrar")
+            TextButton(onClick = onRegisterSuccess) {
+                Text(text = "Já possui uma conta? Entrar")
+            }
 
 
         }
+
     }
+
